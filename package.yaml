@@ -1,0 +1,48 @@
+name:       blueprint
+version:    0.1.0
+github:     "ft/blueprint"
+license:    BSD2
+author:     "Frank Terbeck"
+maintainer: "ft@bewatermyfriend.org"
+copyright:  "2021 Frank Terbeck"
+
+extra-source-files:
+  - README
+  - CHANGES
+
+description:    An implementation of R7RS Scheme
+homepage:       https://github.com/ft/blueprint
+bug-reports:    https://github.com/ft/blueprint/issues
+
+dependencies:
+  - base >= 4.7 && < 5
+  - containers
+  - text
+  - transformers
+  - megaparsec
+
+library:
+  source-dirs: src
+
+executables:
+  blueprint-exe:
+    main:                Blueprint.hs
+    source-dirs:         prg
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+     - blueprint
+
+tests:
+  blueprint-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - blueprint
+      - hspec

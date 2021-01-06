@@ -1,0 +1,19 @@
+blueprint - An incomplete implementation of R7RS Scheme
+-------------------------------------------------------
+
+Very much incomplete for now. At the moment  this is just a proof of concept of
+an imcomplete  parser and  an incomplete  environment-passing interpreter  of a
+very small  part of Scheme.  The blueprint  program prints an  example program,
+parses it, evaluates it and prints the result.
+
+    % stack init
+    % stack build
+    % stack run
+    (define fact (lambda (n)
+                   (if (< n 2)
+                     1
+                     (* n (fact (- n 1))))))
+    (fact 10)
+     → Atom (ScmInteger 3628800)
+
+You got to start somewhere. ;)
