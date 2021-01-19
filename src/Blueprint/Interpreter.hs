@@ -7,36 +7,7 @@ import qualified Data.Map.Strict as Map
 import Blueprint.AbstractSyntaxTree
 import Blueprint.Parser
 import Blueprint.Parser.Internal
-
-type SchemeLookup = Map.Map String SchemeValue
-type SchemeEnvironment = [SchemeLookup]
-type SchemeClosure = ([SchemeExpression], SchemeValue, SchemeEnvironment)
-
-data SchemeValue = Atom SchemeExpression
-                 | Sequence [SchemeExpression]
-                 | List [SchemeValue]
-                 | Builtin SchemeBuiltin
-                 | Special SchemeSpecialForm
-                 | Closure SchemeClosure
-                 | Undefined
-  deriving Show
-
-data SchemeBuiltin = Increment
-                   | Decrement
-                   | LessThan
-                   | Multiply
-                   | Add
-                   | Subtract
-                   | MakeList
-                   | Car
-                   | Cdr
-  deriving Show
-
-data SchemeSpecialForm = Define
-                       | Lambda
-                       | Conditional
-                       | SetBang
-  deriving Show
+import Blueprint.Value
 
 prelude :: SchemeEnvironment
 prelude = [Map.fromList [("define", Special Define),
