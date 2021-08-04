@@ -1,3 +1,4 @@
+{-# LANGUAGE TupleSections #-}
 module Blueprint.Interpreter (eval, parseval) where
 
 import Control.Monad
@@ -71,9 +72,9 @@ applyClosure (formals, body, clenv) args = do
   runSequence body
 
 apply :: SchemeValue -> [SchemeValue] -> State SchemeEnvironment SchemeValue
-apply (Builtin op) rands = state $ \env -> (applyBuiltin op rands, env)
+apply (Builtin op) rands = state (applyBuiltin op rands,)
 apply (Closure op) rands = applyClosure op rands
-apply op rands = state $ \env -> (Atom $ ScmSymbol $ "Catchall: " ++ show op ++ " " ++ show rands, env)
+apply op rands = state (Atom $ ScmSymbol $ "Catchall: " ++ show op ++ " " ++ show rands,)
 
 evalWith :: SchemeExpression -> State SchemeEnvironment SchemeValue
 evalWith (ScmSymbol sym) = state $ \env -> (fromEnvironment env sym, env)
@@ -84,7 +85,7 @@ evalWith (ScmList (op:rands)) = do
     Special form -> applySpecial form rands
     _            -> do operands <- mapM evalWith rands
                        apply operator operands
-evalWith expr = state $ \env -> (Atom expr, env)
+evalWith expr = state (Atom expr,)
 
 eval :: SchemeExpression -> SchemeValue
 eval expr = evalState (evalWith expr) prelude
