@@ -91,6 +91,6 @@ eval :: SchemeExpression -> SchemeValue
 eval expr = evalState (evalWith expr) prelude
 
 parseval :: String -> SchemeValue
-parseval str = case readScheme ("(begin " ++ str ++ ")") of
+parseval str = case readSchemeProgram str of
   Left err -> error $ show err
   Right expr -> eval expr

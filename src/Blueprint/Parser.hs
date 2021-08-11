@@ -2,6 +2,7 @@
 
 module Blueprint.Parser (parseScheme,
                          readScheme,
+                         readSchemeProgram,
                          schemeExpression) where
 
 import Prelude hiding (readList)
@@ -18,6 +19,9 @@ import qualified Blueprint.Parser.Symbol as Symbol
 
 readScheme :: String -> Either ParserError SchemeExpression
 readScheme = parse parseScheme ""
+
+readSchemeProgram :: String -> Either ParserError SchemeExpression
+readSchemeProgram prg = readScheme ("(begin " ++ prg ++ ")")
 
 parseScheme :: Parser SchemeExpression
 parseScheme = spaceConsumer *> schemeExpression <* eof
