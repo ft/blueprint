@@ -34,6 +34,7 @@ executables:
       - -with-rtsopts=-N
     dependencies:
      - blueprint
+     - cmdargs
 
 tests:
   blueprint-test:
