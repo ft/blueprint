@@ -4,14 +4,14 @@ import Control.Monad
 import Blueprint.Interpreter
 
 program =
-  [ "(define fact (lambda (n)",
-    "               (if (< n 2)",
-    "                 1",
-    "                 (* n (fact (- n 1))))))",
-    "(fact 10)" ]
+  unlines [ "(define fact (lambda (n)",
+            "               (if (< n 2)",
+            "                 1",
+            "                 (* n (fact (- n 1))))))",
+            "(fact 10)" ]
 
 main :: IO ()
 main = do
-  forM_ program putStrLn
+  putStrLn program
   putStr " → "
-  print $ parseval $ concat program
+  print $ parseval program
