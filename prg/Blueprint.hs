@@ -5,7 +5,10 @@ module Main where
 
 import System.Console.CmdArgs
 import Control.Monad
+
 import Blueprint.Interpreter
+import Blueprint.Parser
+
 import Paths_blueprint (version)
 import Data.Version (showVersion)
 
@@ -31,6 +34,13 @@ main :: IO ()
 main = do
   args <- cmdArgsRun config
   program <- readFile $ fileName args
-  putStrLn program
-  putStr " → "
-  print $ parseval program
+  case readSchemeProgram program of
+    Left err -> error $ show err
+    Right ast -> do
+      putStrLn program
+      when (verbose args) $ do
+        putStr " ⇒ "
+        print ast
+        putChar '\n'
+      putStr " → "
+      print $ eval ast
